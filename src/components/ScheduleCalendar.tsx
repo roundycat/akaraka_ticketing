@@ -80,19 +80,19 @@ export default function ScheduleCalendar() {
   ];
 
   return (
-    <Card className="shadow-xl border-primary/10 overflow-hidden mb-12 bg-white">
-      <CardHeader className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border-b border-gray-100 pb-4">
+    <Card className="shadow-xl border-primary/10 overflow-hidden mb-12 bg-white rounded-[1.5rem]">
+      <CardHeader className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border-b border-gray-100 pb-4 rounded-t-[1.5rem] -mx-[1px] -mt-[1px]">
         <CardTitle className="text-2xl font-extrabold text-[#113285] flex items-center">
           <CalendarDays className="w-7 h-7 mr-3 text-primary" />
           1. 전체 일정 안내
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0 overflow-x-auto">
-        <div className="min-w-[700px]">
+      <CardContent className="p-0 sm:p-2 md:p-4 overflow-hidden">
+        <div className="w-full">
           {/* Header */}
-          <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-50">
+          <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-50 rounded-t-xl overflow-hidden">
             {daysOfWeek.map((day, i) => (
-              <div key={i} className={cn("py-3 text-center font-bold text-sm", day.color)}>
+              <div key={i} className={cn("py-2 text-center font-bold text-[10px] sm:text-xs md:text-sm", day.color)}>
                 {day.name}
               </div>
             ))}
@@ -126,7 +126,7 @@ export default function ScheduleCalendar() {
                       <div
                         key={evtIdx}
                         className={cn(
-                          "px-1 py-1 text-[10px] md:text-xs font-bold rounded-sm shadow-sm transition-all hover:scale-[1.01] hover:shadow-md cursor-default flex items-center justify-center text-center leading-tight whitespace-normal break-keep min-h-[28px]",
+                          "px-[2px] py-1 text-[8.5px] sm:text-[10px] md:text-xs font-bold rounded-sm shadow-sm transition-all hover:scale-[1.01] hover:shadow-md cursor-default flex items-center justify-center text-center leading-[1.1] whitespace-pre-wrap break-words sm:break-keep min-h-[24px] md:min-h-[28px]",
                           event.colorClass
                         )}
                         style={{

@@ -244,7 +244,7 @@ export default function WizardForm() {
           <motion.div key="step1" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }} className="space-y-8">
             <ScheduleCalendar />
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem] -mx-[1px] -mt-[1px]">
                 <CardTitle className="text-primary text-xl">Step 1: 안내 및 약관 동의</CardTitle>
                 <CardDescription>2025 아카라카 티켓팅 신청을 위해 약관에 동의해주세요.</CardDescription>
                 <div className="mt-2 text-sm font-semibold text-primary/80">신청 기간: 2025.04.18 09:00 ~ 04.27 13:00</div>
@@ -316,7 +316,7 @@ export default function WizardForm() {
         {step === 2 && (
           <motion.div key="step2" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem] -mx-[1px] -mt-[1px]">
                 <CardTitle className="text-primary text-xl">Step 2: 기본 정보 및 서류 업로드</CardTitle>
                 <CardDescription>재학증명서를 업로드하면 입력칸이 자동으로 채워집니다. 빈칸 및 수정이 불가한 칸은 재촬영을 통해 인식해주세요.</CardDescription>
               </CardHeader>
@@ -516,7 +516,7 @@ export default function WizardForm() {
         {step === 3 && (
           <motion.div key="step3" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem] -mx-[1px] -mt-[1px]">
                 <CardTitle className="text-primary text-xl">Step 3: 추가 서류 확인</CardTitle>
                 <CardDescription>신입생/소속 변경자의 경우 티켓 우선 배분 대상입니다.</CardDescription>
               </CardHeader>
@@ -636,7 +636,7 @@ export default function WizardForm() {
         {step === 4 && (
           <motion.div key="step4" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem] -mx-[1px] -mt-[1px]">
                 <CardTitle className="text-primary text-xl">Step 4: 최종 검토 및 제출</CardTitle>
                 <CardDescription>입력한 정보를 마지막으로 꼼꼼히 확인해주세요.</CardDescription>
               </CardHeader>
