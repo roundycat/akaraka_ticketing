@@ -23,32 +23,41 @@ export async function extractEnrollmentData(imageSrc: string | File): Promise<Pa
     // Simple Regex Parsers based on common Korean university enrollment certificates
     const result: ParsedData = {};
 
-    // Name (성명: 홍길동)
+    // Name (성명: 홍길동 or 성 명 \n 홍길동)
     const nameMatch = text.match(/성\s*명\s*[:：]?\s*([가-힣]{2,4})/);
-    if (nameMatch) result.name = nameMatch[1].trim();
+    if (nameMatch) {
+      result.name = nameMatch[1].trim();
+    } else {
+      // Fallback: look for typical 3-char Korean name near '성명' spanning newlines
+      const fallbackNameMatch = text.match(/성\s*명[\s\S]{1,10}?([가-힣]{2,4})/);
+      if (fallbackNameMatch && !fallbackNameMatch[1].includes("성명")) result.name = fallbackNameMatch[1].trim();
+    }
 
     // Student ID (학번: 2020123456)
     const studentIdMatch = text.match(/학\s*번\s*[:：]?\s*(\d{10})/);
-    if (studentIdMatch) result.studentId = studentIdMatch[1].trim();
+    if (studentIdMatch) {
+      result.studentId = studentIdMatch[1].trim();
+    } else {
+      // Fallback: any 10 digit number starting with 19 or 20
+      const fallbackId = text.match(/\b((19|20)\d{8})\b/);
+      if (fallbackId) result.studentId = fallbackId[1];
+    }
 
     // Department/Major (소속: 상경대학 경제학부 / 전공: 경제학전공)
-    const deptMatch = text.match(/대\s*학\s*[:：]?\s*([가-힣\s]+대학)/);
-    if (deptMatch) result.department = deptMatch[1].trim();
+    const deptMatch = text.match(/(([가-힣]+대학교?\s*)?[가-힣\s]+대\s*학)/);
+    if (deptMatch) result.department = deptMatch[1].trim().replace(/\s+/g, ' ');
     
-    const majorMatch = text.match(/학\s*과\s*[:：]?\s*([가-힣\s]+전공|[가-힣\s]+과|[가-힣\s]+부)/);
-    if (majorMatch) result.major = majorMatch[1].trim();
+    // Document Verification Number
+    const docVerMatch = text.match(/[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}(-[A-Z0-9]{4})?/i);
+    if (docVerMatch) result.documentVerificationNumber = docVerMatch[0].toUpperCase();
 
-    // Document Verification Number (문서확인번호: A1B2-C3D4-E5F6)
-    const docVerMatch = text.match(/문서확인번호\s*[:：]?\s*([A-Za-z0-9\-]{10,20})/);
-    if (docVerMatch) result.documentVerificationNumber = docVerMatch[1].trim();
-
-    // Issue Date (발급수량 위, 2025년 04월 01일)
-    const dateMatch = text.match(/(\d{4})\s*년\s*(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+    // Issue Date
+    const dateMatch = text.match(/20\d{2}[\.\-\s년]+(0?[1-9]|1[0-2])[\.\-\s월]+(0?[1-9]|[12]\d|3[01])[\.\-\s일]{0,2}/);
     if (dateMatch) {
-      const year = dateMatch[1];
-      const month = dateMatch[2].padStart(2, '0');
-      const day = dateMatch[3].padStart(2, '0');
-      result.issueDate = `${year}-${month}-${day}`;
+      const year = dateMatch[0].match(/20\d{2}/)?.[0] || "";
+      const month = dateMatch[1].padStart(2, '0');
+      const day = dateMatch[2].padStart(2, '0');
+      if (year) result.issueDate = `${year}-${month}-${day}`;
     }
 
     return result;
