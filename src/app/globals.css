@@ -2,6 +2,26 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@font-face {
+  font-family: 'Yonsei';
+  src: url('/fonts/YonseiLight.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yonsei';
+  src: url('/fonts/YonseiBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-yonsei: 'Yonsei', serif;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

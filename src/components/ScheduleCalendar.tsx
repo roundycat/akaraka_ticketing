@@ -22,46 +22,46 @@ export default function ScheduleCalendar() {
     {
       dates: [13, 14, 15, 16, 17, 18, 19],
       events: [
-        { title: "단과대석 신청 기간", startCol: 6, span: 2, colorClass: "bg-rose-500 text-white" },
-        { title: "동아리석 신청 기간", startCol: 6, span: 2, colorClass: "bg-amber-500 text-white" },
+        { title: "단과대석 신청 기간", startCol: 6, span: 2, colorClass: "bg-[#2B3586] text-[#FFFFFF]" },
+        { title: "동아리석 신청 기간", startCol: 6, span: 2, colorClass: "bg-[#1593C6] text-[#FFFFFF]" },
       ]
     },
     {
       dates: [20, 21, 22, 23, 24, 25, 26],
       events: [
-        { title: "단과대석 신청 기간", startCol: 1, span: 7, colorClass: "bg-rose-500 text-white" },
-        { title: "동아리석 신청 기간", startCol: 1, span: 6, colorClass: "bg-amber-500 text-white" }, // spans 20-25 or 20-26? The image shows orange goes until Wed 30th. Wait, week 2 orange goes full 7 cols. But image shows it full. Let's make it 7.
+        { title: "단과대석 신청 기간", startCol: 1, span: 7, colorClass: "bg-[#2B3586] text-[#FFFFFF]" },
+        { title: "동아리석 신청 기간", startCol: 1, span: 6, colorClass: "bg-[#1593C6] text-[#FFFFFF]" }, // spans 20-25 or 20-26? The image shows orange goes until Wed 30th. Wait, week 2 orange goes full 7 cols. But image shows it full. Let's make it 7.
       ]
     },
     {
       dates: [27, 28, 29, 30, "5/1", 2, 3],
       events: [
-        { title: "단과대석 신청 기간", startCol: 1, span: 1, colorClass: "bg-rose-500 text-white" },
-        { title: "동아리석 신청 기간", startCol: 1, span: 4, colorClass: "bg-amber-500 text-white" },
-        { title: "단과대석 신청 오류 확인 기간", startCol: 5, span: 3, colorClass: "bg-emerald-500 text-white" },
+        { title: "단과대석 신청 기간", startCol: 1, span: 1, colorClass: "bg-[#2B3586] text-[#FFFFFF]" },
+        { title: "동아리석 신청 기간", startCol: 1, span: 4, colorClass: "bg-[#1593C6] text-[#FFFFFF]" },
+        { title: "단과대석 신청 오류 확인 기간", startCol: 5, span: 3, colorClass: "bg-[#E6F2F8] text-[#2B3586] border border-[#2B3586]/20" },
       ]
     },
     {
       dates: [4, 5, 6, 7, 8, 9, 10],
       events: [
-        { title: "단과대석 결제 기간", startCol: 1, span: 4, colorClass: "bg-teal-500 text-white" },
-        { title: "단과대석 결제 확인 및 정정 기간", startCol: 5, span: 2, colorClass: "bg-sky-500 text-white" },
-        { title: "환불 신청 기간", startCol: 7, span: 1, colorClass: "bg-indigo-500 text-white" },
-        { title: "단과대석 당첨 발표", startCol: 1, span: 1, colorClass: "bg-teal-50 border border-teal-500 text-teal-700", outlineOnly: true },
+        { title: "단과대석 결제 기간", startCol: 1, span: 4, colorClass: "bg-[#3B4CA8] text-[#FFFFFF]" },
+        { title: "단과대석 결제 확인 및 정정 기간", startCol: 5, span: 2, colorClass: "bg-[#192055] text-[#FFFFFF]" },
+        { title: "환불 신청 기간", startCol: 7, span: 1, colorClass: "bg-[#F0F0F0] text-[#656565] border border-gray-200" },
+        { title: "단과대석 당첨 발표", startCol: 1, span: 1, colorClass: "bg-[#FFFFFF] border-2 border-[#F2A900] text-[#F2A900]", outlineOnly: true },
       ]
     },
     {
       dates: [11, 12, 13, 14, 15, 16, 17],
       events: [
-        { title: "환불 신청 기간", startCol: 1, span: 7, colorClass: "bg-indigo-500 text-white" },
+        { title: "환불 신청 기간", startCol: 1, span: 7, colorClass: "bg-[#F0F0F0] text-[#656565] border border-gray-200" },
       ]
     },
     {
       dates: [18, 19, 20, 21, 22, 23, 24],
       events: [
-        { title: "환불 신청 기간", startCol: 1, span: 3, colorClass: "bg-indigo-500 text-white" },
-        { title: "모바일 티켓 발송", startCol: 5, span: 3, colorClass: "bg-violet-600 text-white" },
-        { title: "아카라카를 온누리에", startCol: 7, span: 1, colorClass: "bg-fuchsia-600 text-white" },
+        { title: "환불 신청 기간", startCol: 1, span: 3, colorClass: "bg-[#F0F0F0] text-[#656565] border border-gray-200" },
+        { title: "모바일 티켓 발송", startCol: 5, span: 3, colorClass: "bg-[#222222] text-[#FFFFFF]" },
+        { title: "아카라카를 온누리에", startCol: 7, span: 1, colorClass: "bg-[#F2A900] text-[#FFFFFF] border border-[#F2A900] shadow-md z-10" },
       ]
     }
   ];
@@ -70,13 +70,13 @@ export default function ScheduleCalendar() {
   weeks[1].events[1].span = 7;
 
   const daysOfWeek = [
-    { name: "SUN", color: "text-rose-500" },
-    { name: "MON", color: "text-gray-500" },
-    { name: "TUE", color: "text-gray-500" },
-    { name: "WED", color: "text-gray-500" },
-    { name: "THU", color: "text-gray-500" },
-    { name: "FRI", color: "text-gray-500" },
-    { name: "SAT", color: "text-sky-500" },
+    { name: "SUN", color: "text-[#E53E3E]" }, // Standard readable Red
+    { name: "MON", color: "text-[#656565]" },
+    { name: "TUE", color: "text-[#656565]" },
+    { name: "WED", color: "text-[#656565]" },
+    { name: "THU", color: "text-[#656565]" },
+    { name: "FRI", color: "text-[#656565]" },
+    { name: "SAT", color: "text-[#1593C6]" }, // Akaraka Cyan
   ];
 
   return (
