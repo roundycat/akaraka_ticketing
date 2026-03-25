@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🦅 2025 아카라카를 온누리에 티켓 신청 시스템
 
-## Getting Started
+연세대학교 "아카라카를 온누리에" 공식 티켓팅 및 신청자 정보를 수집하는 웹 애플리케이션입니다. 
+Next.js 14 (App Router) + Tailwind CSS + Framer Motion 컴포넌트로 구성되어 있으며, Tesseract.js (재학증명서 자동 파싱 OCR)와 구글 스프레드시트 API(데이터베이스 연동) 기능이 내장되어 있습니다.
 
-First, run the development server:
+---
 
+## 🚀 시작하기
+
+### 1️⃣ 패키지 설치
+터미널(또는 명령 프롬프트)을 열고 구동에 필요한 라이브러리들을 설치해주세요.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ 개발 서버 실행
+다음 명령어로 로컬 서버를 실행하여 직접 화면을 확인할 수 있습니다.
+```bash
+npm run dev
+```
+브라우저에서 `http://localhost:3000` 으로 접속하면 화면이 나타납니다!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 주요 설정 변경 가이드
 
-## Learn More
+사용자(운영진/개발자)가 편하게 환경과 설정값을 바꿀 수 있도록 다음 파일들을 수정해주시면 됩니다.
 
-To learn more about Next.js, take a look at the following resources:
+### 🔹 1. 구글 스프레드시트 연동 설정 (필수!)
+학생들이 폼을 제출했을 때 자동으로 내 구글 시트에 저장되도록 연동하는 권한 키 설정입니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+프로젝트 파일 가장 상단 위치(루트 폴더)에 `.env.local` 이라는 새 파일을 만들고, 다음 내용을 여러분의 인증 정보로 채워 넣어주세요.
+*(Google Cloud Console에서 서비스 계정(Service Account)을 생성하여 키를 받아야 합니다.)*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+# 구글 서비스 계정 이메일
+GOOGLE_CLIENT_EMAIL="your-service-account@xxxxxxxx.iam.gserviceaccount.com"
 
-## Deploy on Vercel
+# 구글 서비스 계정 프라이빗 키 (반드시 큰따옴표로 감싸야 하며, 줄바꿈 문자 \n을 그대로 넣어야 합니다.)
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANB... (길어서 생략) ...\n-----END PRIVATE KEY-----\n"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 데이터를 저장/조회할 구글 스프레드시트 주소창의 고유 ID 문자열
+SPREADSHEET_ID="1A2B3c4d5e6f7g..."
+```
+> **💡 주의:** 이 파일(`.env.local`)은 보안상 가장 중요하므로 절대 외부에 노출(GitHub 등)되면 안 됩니다! 코딩 과정에서 알아서 `.gitignore`에 의해 깃허브에는 제외되도록 처리되어 있습니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### 🔹 2. 신청 마감 시간 변경하기
+티켓팅 기간이 지나면 사람들이 더 이상 신청을 못 하도록 "신청이 마감되었습니다" 화면을 띄울 수 있습니다.
+
+* **파일 위치**: `src/components/WizardForm.tsx` (약 55번째 줄)
+```typescript
+const DEADLINE = new Date("2026-04-27T13:00:00+09:00")
+```
+위 시간(`YYYY-MM-DDTHH:MM:SS`)을 운영 환경에 맞게 고쳐주시면, 해당 시간이 지나는 순간 폼이 닫힙니다.
+
+---
+
+### 🔹 3. 일정표(캘린더) 색상 및 날짜 바꾸기
+메인 화면의 첫 번째 단계 위쪽에 아름답게 배치된 캘린더 컴포넌트의 일정을 수정할 수 있습니다.
+
+* **파일 위치**: `src/components/ScheduleCalendar.tsx` (약 20번째 줄 `const weeks = [...]` 부분)
+
+```typescript
+{
+  dates: [13, 14, 15, 16, 17, 18, 19],
+  events: [
+    // startCol: 시작 요일 (1=일요일, 2=월요일... 6=금요일, 7=토요일)
+    // span: 며칠 동안 지속할 것인지 (예: 2 -> 금,토 이틀)
+    { title: "단과대석 신청 기간", startCol: 6, span: 2, colorClass: "bg-rose-500 text-white" },
+  ]
+}
+```
+*   `dates` 안의 날짜 숫자들을 바꾸면 해당 주차의 달력 일수가 변경됩니다.
+*   `events` 안에서 `title`(보여질 글씨), `startCol`(시작 요일), `span`(며칠 동안 진행할지)만 변경하시면 자동으로 캘린더 막대가 해당 칸수만큼 쭉 그려집니다!
+
+---
+
+### 🔹 4. 배경 로고 이미지 변경
+배경에 은은하게 깔려있는 "연세대학교 마크/아카라카 로고"를 다른 이미지로 교체하고 싶으실 경우:
+
+*   새로운 로고 이미지(PNG/SVG 등)를 프로젝트 내부 **`public/akaraka-logo.png`** 로 이름을 똑같이 맞춰 덮어쓰기 하시면 자동으로 교체됩니다.
+
+---
+
+## 💻 문의 및 에러 확인
+
+*   **Tesseract.js 한글 인식률(OCR)**: `src/lib/ocr.ts` 내에 정규식이 포함되어 있습니다. 특정 대학교 증명서에서 이름이나 학번이 안 뽑힌다면 해당 파일의 Regex(정규식)를 조정하여 정확도를 높일 수 있습니다.
+*   배포는 Vercel(Next.js 공식 호스팅) 플랫폼을 활용하여 간편하고 무료로 배포할 수 있습니다! (필요시 프론트엔드 담당자에게 `vercel deploy` 명령을 요청하세요.)

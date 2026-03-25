@@ -145,15 +145,22 @@ export default function WizardForm() {
       
       setIsOcrLoading(true)
       try {
-        const url = URL.createObjectURL(file)
-        const extracted = await extractEnrollmentData(url)
-        if (extracted.name) form2.setValue("name", extracted.name, { shouldValidate: true })
-        if (extracted.studentId) form2.setValue("studentId", extracted.studentId, { shouldValidate: true })
-        if (extracted.department) form2.setValue("department", extracted.department, { shouldValidate: true })
-        if (extracted.documentVerificationNumber) form2.setValue("documentVerificationNumber", extracted.documentVerificationNumber, { shouldValidate: true })
-        if (extracted.issueDate) form2.setValue("issueDate", extracted.issueDate, { shouldValidate: true })
+        // Pass file directly instead of Object URL
+        const extracted = await extractEnrollmentData(file)
+        
+        let filledCount = 0;
+        if (extracted.name) { form2.setValue("name", extracted.name, { shouldValidate: true }); filledCount++; }
+        if (extracted.studentId) { form2.setValue("studentId", extracted.studentId, { shouldValidate: true }); filledCount++; }
+        if (extracted.department) { form2.setValue("department", extracted.department, { shouldValidate: true }); filledCount++; }
+        if (extracted.documentVerificationNumber) { form2.setValue("documentVerificationNumber", extracted.documentVerificationNumber, { shouldValidate: true }); filledCount++; }
+        if (extracted.issueDate) { form2.setValue("issueDate", extracted.issueDate, { shouldValidate: true }); filledCount++; }
+        
+        if (filledCount === 0) {
+          alert("이미지에서 정보를 인식하지 못했습니다. 증명서가 맞는지, 화질이 선명한지 확인하시고 재촬영해주세요. (PC 환경 테스트 시 브라우저 콘솔(F12)을 확인해보세요.)");
+        }
       } catch (err) {
         console.error(err)
+        alert("OCR 텍스트 분석 중 기술적 에러가 발생했습니다. (네트워크나 브라우저 환경 문제일 수 있습니다.)");
       } finally {
         setIsOcrLoading(false)
       }
