@@ -56,14 +56,23 @@ export async function extractEnrollmentData(imageSrc: string | File): Promise<Pa
       if (fallbackDeptMatch) result.department = fallbackDeptMatch[1].trim().replace(/\s+/g, ' ');
     }
     
-    // Document Verification Number
-    const docVerMatch = text.match(/[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}(-[A-Z0-9]{4})?/i);
-    if (docVerMatch) result.documentVerificationNumber = docVerMatch[0].toUpperCase();
+    // Document Verification Number (Whitespace tolerant and typo correction for 8/S, 0/O, 1/I)
+    const docVerMatch = text.match(/([A-Z0-9]{4})\s*-\s*([A-Z0-9]{4})\s*-\s*([A-Z0-9]{4})(\s*-\s*([A-Z0-9]{4}))?/i);
+    if (docVerMatch) {
+      result.documentVerificationNumber = docVerMatch[0]
+        .replace(/\s+/g, '')
+        .toUpperCase()
+        .replace(/O/g, '0') // O to 0
+        .replace(/S/g, '8') // S to 8
+        .replace(/I/g, '1') // I to 1
+        .replace(/L/g, '1'); // L to 1
+    }
 
-    // Issue Date
-    const dateMatch = text.match(/20\d{2}[\.\-\s년]+(0?[1-9]|1[0-2])[\.\-\s월]+(0?[1-9]|[12]\d|3[01])[\.\-\s일]{0,2}/);
+    // Issue Date (Strictly look for 202X to 100% bypass 200X birth dates)
+    // IMPORTANT: Alternations must check 2-digit options first (1[0-2] before 0?[1-9], and 3[01]|[12]\d before 0?[1-9])
+    const dateMatch = text.match(/202\d[^\d]{1,5}(1[0-2]|0?[1-9])[^\d]{1,5}(3[01]|[12]\d|0?[1-9])/);
     if (dateMatch) {
-      const year = dateMatch[0].match(/20\d{2}/)?.[0] || "";
+      const year = dateMatch[0].match(/202\d/)?.[0] || "";
       const month = dateMatch[1].padStart(2, '0');
       const day = dateMatch[2].padStart(2, '0');
       if (year) result.issueDate = `${year}-${month}-${day}`;
