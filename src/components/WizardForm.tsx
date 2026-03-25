@@ -65,10 +65,10 @@ export default function WizardForm() {
   const [step, setStep] = useState(1)
   const [isExpired, setIsExpired] = useState(false)
   const [isClient, setIsClient] = useState(false)
-  
+
   const [isOcrLoading, setIsOcrLoading] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -142,19 +142,19 @@ export default function WizardForm() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
       fieldChange({ name: file.name, file })
-      
+
       setIsOcrLoading(true)
       try {
         // Pass file directly instead of Object URL
         const extracted = await extractEnrollmentData(file)
-        
+
         let filledCount = 0;
         if (extracted.name) { form2.setValue("name", extracted.name, { shouldValidate: true }); filledCount++; }
         if (extracted.studentId) { form2.setValue("studentId", extracted.studentId, { shouldValidate: true }); filledCount++; }
         if (extracted.department) { form2.setValue("department", extracted.department, { shouldValidate: true }); filledCount++; }
         if (extracted.documentVerificationNumber) { form2.setValue("documentVerificationNumber", extracted.documentVerificationNumber, { shouldValidate: true }); filledCount++; }
         if (extracted.issueDate) { form2.setValue("issueDate", extracted.issueDate, { shouldValidate: true }); filledCount++; }
-        
+
         if (filledCount === 0) {
           alert("이미지에서 정보를 인식하지 못했습니다. 증명서가 맞는지, 화질이 선명한지 확인하시고 재촬영해주세요. (PC 환경 테스트 시 브라우저 콘솔(F12)을 확인해보세요.)");
         }
@@ -212,12 +212,12 @@ export default function WizardForm() {
         <div className="relative">
           {/* Progress Line */}
           <div className="absolute top-5 left-8 right-8 h-1 bg-gray-200/80 -translate-y-1/2 -z-10 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary transition-all duration-500 rounded-full" 
+            <div
+              className="h-full bg-primary transition-all duration-500 rounded-full"
               style={{ width: `${((step - 1) / 3) * 100}%` }}
             />
           </div>
-          
+
           <div className="flex justify-between items-start relative z-10 w-full px-2">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="flex flex-col items-center z-10 bg-transparent">
@@ -244,7 +244,7 @@ export default function WizardForm() {
           <motion.div key="step1" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }} className="space-y-8">
             <ScheduleCalendar />
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
                 <CardTitle className="text-primary text-xl">Step 1: 안내 및 약관 동의</CardTitle>
                 <CardDescription>2025 아카라카 티켓팅 신청을 위해 약관에 동의해주세요.</CardDescription>
                 <div className="mt-2 text-sm font-semibold text-primary/80">신청 기간: 2025.04.18 09:00 ~ 04.27 13:00</div>
@@ -301,8 +301,8 @@ export default function WizardForm() {
                 </Form>
               </CardContent>
               <CardFooter className="bg-gray-50 flex justify-end p-6">
-                <Button 
-                  onClick={nextStep} 
+                <Button
+                  onClick={nextStep}
                   disabled={!form1.formState.isValid}
                   className="bg-primary hover:bg-primary/90 px-8 py-6 text-lg rounded-xl shadow-md transition-all active:scale-95 disabled:opacity-50"
                 >
@@ -316,7 +316,7 @@ export default function WizardForm() {
         {step === 2 && (
           <motion.div key="step2" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
                 <CardTitle className="text-primary text-xl">Step 2: 기본 정보 및 서류 업로드</CardTitle>
                 <CardDescription>재학증명서를 업로드하면 입력칸이 자동으로 채워집니다. 빈칸 및 수정이 불가한 칸은 재촬영을 통해 인식해주세요.</CardDescription>
               </CardHeader>
@@ -331,14 +331,14 @@ export default function WizardForm() {
                           <FormLabel className="font-bold text-gray-800">재학증명서 자동 인식 (OCR)</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <input 
-                                type="file" 
+                              <input
+                                type="file"
                                 accept="image/*,application/pdf"
-                                className="hidden" 
+                                className="hidden"
                                 ref={fileInputRef}
                                 onChange={(e) => handleFileUpload(e, field.onChange)}
                               />
-                              <div 
+                              <div
                                 className={cn(
                                   "border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all",
                                   isOcrLoading ? "border-primary/50 bg-primary/5" : "border-gray-300 hover:border-primary/60 hover:bg-gray-50 bg-white"
@@ -357,7 +357,7 @@ export default function WizardForm() {
                                       {field.value ? "다른 파일로 재촬영/재등록" : "파일을 클릭하거나 드래그하여 업로드하세요 (JPG/PNG)"}
                                     </p>
                                     <p className="text-xs text-gray-500">업로드 시 이름, 학번 등 기본 정보가 자동입력됩니다.</p>
-                                    
+
                                     {field.value && (
                                       <div className="mt-4 inline-flex items-center px-4 py-2 bg-blue-50 text-primary rounded-full font-medium text-sm">
                                         <CheckCircle2 className="w-4 h-4 mr-2" />
@@ -380,10 +380,10 @@ export default function WizardForm() {
                           <CheckCircle2 className="w-5 h-5 mr-2" />
                           자동 입력 정보
                         </Label>
-                        <Button 
-                          type="button" 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
                           className="text-xs h-8"
                           disabled={isOcrLoading}
                           onClick={() => fileInputRef.current?.click()}
@@ -501,8 +501,8 @@ export default function WizardForm() {
               </CardContent>
               <CardFooter className="bg-gray-50 flex justify-between p-6">
                 <Button variant="outline" onClick={prevStep} className="px-6 py-6 rounded-xl hover:bg-gray-200"><ChevronLeft className="mr-2 w-4 h-4" /> 이전</Button>
-                <Button 
-                  onClick={nextStep} 
+                <Button
+                  onClick={nextStep}
                   disabled={!form2.formState.isValid || isOcrLoading}
                   className="bg-primary hover:bg-primary/90 px-8 py-6 rounded-xl shadow-md transition-all active:scale-95 disabled:opacity-50"
                 >
@@ -516,7 +516,7 @@ export default function WizardForm() {
         {step === 3 && (
           <motion.div key="step3" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
                 <CardTitle className="text-primary text-xl">Step 3: 추가 서류 확인</CardTitle>
                 <CardDescription>신입생/소속 변경자의 경우 티켓 우선 배분 대상입니다.</CardDescription>
               </CardHeader>
@@ -528,7 +528,7 @@ export default function WizardForm() {
                       name="isTransferOrNew"
                       render={({ field }) => (
                         <FormItem className="space-y-4">
-                          <FormLabel className="text-xl font-extrabold text-gray-800 leading-tight">2025년도 9월 입학자<br/><span className="text-primary/70 text-lg font-bold">이거나 미래캠퍼스에서 소속 변경을 하셨습니까?</span></FormLabel>
+                          <FormLabel className="text-xl font-extrabold text-gray-800 leading-tight">2025년도 9월 입학자<br /><span className="text-primary/70 text-lg font-bold">이거나 미래캠퍼스에서 소속 변경을 하셨습니까?</span></FormLabel>
                           <FormControl>
                             <RadioGroup
                               onValueChange={field.onChange}
@@ -537,8 +537,8 @@ export default function WizardForm() {
                             >
                               <div className="relative">
                                 <RadioGroupItem value="Yes" id="yes" className="peer sr-only" />
-                                <Label 
-                                  htmlFor="yes" 
+                                <Label
+                                  htmlFor="yes"
                                   className="flex flex-col items-center justify-center p-6 border-2 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-blue-50/60 peer-data-[state=checked]:shadow-md"
                                 >
                                   <span className="font-bold text-lg text-gray-800">네, 해당합니다.</span>
@@ -546,8 +546,8 @@ export default function WizardForm() {
                               </div>
                               <div className="relative">
                                 <RadioGroupItem value="No" id="no" className="peer sr-only" />
-                                <Label 
-                                  htmlFor="no" 
+                                <Label
+                                  htmlFor="no"
                                   className="flex flex-col items-center justify-center p-6 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors peer-data-[state=checked]:border-gray-500 peer-data-[state=checked]:bg-gray-100 peer-data-[state=checked]:shadow-md"
                                 >
                                   <span className="font-bold text-lg text-gray-800">아니요, 해당하지 않습니다.</span>
@@ -562,7 +562,7 @@ export default function WizardForm() {
 
                     <AnimatePresence>
                       {form3.watch("isTransferOrNew") === "Yes" && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
@@ -584,9 +584,9 @@ export default function WizardForm() {
                                 <FormLabel className="text-primary font-bold text-lg">학적증명서 첨부 (필수)</FormLabel>
                                 <FormControl>
                                   <div className="relative">
-                                    <input 
-                                      type="file" 
-                                      className="hidden" 
+                                    <input
+                                      type="file"
+                                      className="hidden"
                                       id="academic-file"
                                       onChange={(e) => {
                                         if (e.target.files && e.target.files[0]) {
@@ -594,7 +594,7 @@ export default function WizardForm() {
                                         }
                                       }}
                                     />
-                                    <label 
+                                    <label
                                       htmlFor="academic-file"
                                       className="block border-2 border-dashed border-primary/30 rounded-xl p-10 text-center cursor-pointer hover:border-primary hover:bg-blue-50/40 transition-all bg-white"
                                     >
@@ -621,8 +621,8 @@ export default function WizardForm() {
               </CardContent>
               <CardFooter className="bg-gray-50 flex justify-between p-6">
                 <Button variant="outline" onClick={prevStep} className="px-6 py-6 rounded-xl hover:bg-gray-200"><ChevronLeft className="mr-2 w-4 h-4" /> 이전</Button>
-                <Button 
-                  onClick={nextStep} 
+                <Button
+                  onClick={nextStep}
                   disabled={!form3.formState.isValid}
                   className="bg-primary hover:bg-primary/90 px-8 py-6 rounded-xl shadow-md transition-all active:scale-95 disabled:opacity-50"
                 >
@@ -636,7 +636,7 @@ export default function WizardForm() {
         {step === 4 && (
           <motion.div key="step4" variants={animationVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             <Card className="shadow-2xl border-primary/20 overflow-hidden rounded-[1.5rem] bg-white/95 backdrop-blur-md">
-              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative">
+              <CardHeader className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b border-blue-100 overflow-hidden relative rounded-t-[1.5rem]">
                 <CardTitle className="text-primary text-xl">Step 4: 최종 검토 및 제출</CardTitle>
                 <CardDescription>입력한 정보를 마지막으로 꼼꼼히 확인해주세요.</CardDescription>
               </CardHeader>
@@ -702,8 +702,8 @@ export default function WizardForm() {
               </CardContent>
               <CardFooter className="bg-gray-50 flex justify-between p-6">
                 <Button variant="outline" onClick={prevStep} disabled={isSubmitting} className="px-6 py-6 rounded-xl hover:bg-gray-200"><ChevronLeft className="mr-2 w-4 h-4" /> 이전</Button>
-                <Button 
-                  onClick={form4.handleSubmit(onSubmit)} 
+                <Button
+                  onClick={form4.handleSubmit(onSubmit)}
                   disabled={!form4.formState.isValid || isSubmitting}
                   className="bg-primary hover:bg-primary/90 px-10 py-6 rounded-xl shadow-lg transition-all active:scale-95 text-lg font-bold disabled:opacity-50"
                   size="lg"

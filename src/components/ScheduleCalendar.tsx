@@ -102,12 +102,12 @@ export default function ScheduleCalendar() {
           <div className="flex flex-col">
             {weeks.map((week, weekIdx) => (
               <div key={weekIdx} className="border-b border-gray-100 relative group flex flex-col min-h-[100px]">
-                
+
                 {/* Dates Row */}
                 <div className="grid grid-cols-7 absolute inset-0 pointer-events-none">
                   {week.dates.map((date, dateIdx) => (
-                    <div 
-                      key={dateIdx} 
+                    <div
+                      key={dateIdx}
                       className={cn(
                         "p-2 text-right text-sm font-medium border-r border-gray-50/50",
                         dateIdx === 0 ? "text-rose-500/80" : dateIdx === 6 ? "text-sky-500/80" : "text-gray-400"

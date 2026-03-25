@@ -26,10 +26,18 @@ export default function Home() {
       <div className="container mx-auto relative z-10 px-4">
         <div className="text-center mb-12 mt-6">
           <div className="inline-block rounded-3xl backdrop-blur-md bg-white/60 border border-white/50 px-10 py-8 shadow-xl">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-[#113285] mb-4 tracking-tight drop-shadow-sm">
+            <h1 
+              className="text-4xl md:text-5xl font-extrabold text-[#113285] mb-4 tracking-tight drop-shadow-sm font-serif" 
+              style={{ fontFamily: 'var(--font-yonsei), serif' }}
+            >
               YONSEI AKARAKA TICKETING
             </h1>
-            <p className="text-blue-900 font-bold text-lg md:text-xl tracking-wide">2025 아카라카를 온누리에 티켓 신청 시스템</p>
+            <p 
+              className="text-blue-900 font-bold text-lg md:text-xl tracking-wide font-serif" 
+              style={{ fontFamily: 'var(--font-yonsei), serif' }}
+            >
+              2025 아카라카를 온누리에 티켓 신청 시스템
+            </p>
           </div>
         </div>
         <WizardForm />
